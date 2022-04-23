@@ -99,8 +99,30 @@ jobs:
         with:
           name: lib/index.linux-arm64.node
           if-no-files-found: error
-          
 
+x86_64-unknown-linux-musl:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Enter folder
+        run: |
+          ls -l
+          cd crates/matrix-sdk-crypto-nodejs/
+          ls -l
+
+          docker pull ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-alpine
+          docker tag ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-alpine builder
+
+          docker run --rm -v $(pwd):/build -w /build builder yarn --ignore-scripts 
+          docker run --rm -v $(pwd):/build -w /build builder yarn rust:targets && yarn build:linux:x64:musl
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: lib/index.linux-arm64.node
+          if-no-files-found: error
+
+         
 
   publish:
     name: Publish
