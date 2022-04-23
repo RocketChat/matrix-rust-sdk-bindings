@@ -42,7 +42,7 @@ jobs:
           ls -l
           cd crates/matrix-sdk-crypto-nodejs/
           ls -l
-          yarn install
+          yarn --ignore-scripts
           yarn build:release
       - name: Upload artifact
         uses: actions/upload-artifact@v2
@@ -73,7 +73,7 @@ jobs:
           ls -l
           cd crates/matrix-sdk-crypto-nodejs/
           ls -l
-          yarn install
+          yarn --ignore-scripts
           yarn build:release --target=aarch64-apple-darwin
       - name: Upload artifact
         uses: actions/upload-artifact@v2
@@ -92,7 +92,8 @@ jobs:
           cd crates/matrix-sdk-crypto-nodejs/
           ls -l
           docker build -f release/Dockerfile.linux -t builder .
-          docker run --rm -v $(pwd):/build -w /build builder yarn install && yarn build:release --target=x86_64-unknown-linux-gnu
+          docker run --rm -v $(pwd):/build -w /build builder yarn --ignore-scripts 
+          docker run --rm -v $(pwd):/build -w /build builder yarn build:release --target=x86_64-unknown-linux-gnu
           docker run --rm -v $(pwd):/build -w /build builder yarn build:release --target=x86_64-unknown-linux-musl
       - name: Upload artifact
         uses: actions/upload-artifact@v2
