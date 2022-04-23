@@ -20,7 +20,7 @@
     "yarn.lock"
   ],
   "scripts": {
-    "rust:targets": "rustup target add x86_64-pc-windows-msvc i686-pc-windows-msvc x86_64-unknown-linux-gnu i686-unknown-linux-gnu x86_64-apple-darwin",
+    "rust:targets": "rustup target add x86_64-pc-windows-msvc i686-pc-windows-msvc x86_64-unknown-linux-gnu i686-unknown-linux-gnu x86_64-apple-darwin x86_64-unknown-linux-musl",
     "build:win": "yarn build:win:x64 && yarn build:win:ia32",
     "build:win:x64": "napi build --js ./lib/napi-module.js --dts napi-module.d.ts --release --platform --target x86_64-pc-windows-msvc ./lib",
     "build:win:ia32": "napi build --js ./lib/napi-module.js --dts napi-module.d.ts --release --platform --target i686-pc-windows-msvc ./lib",
