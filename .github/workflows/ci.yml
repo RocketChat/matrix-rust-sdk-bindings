@@ -115,6 +115,8 @@ jobs:
     runs-on: ${{ matrix.settings.host }}
     steps:
       - uses: actions/checkout@v2
+      - name: Enter folder
+        run: cd crates/matrix-sdk-crypto-nodejs/
       - name: Setup node
         uses: actions/setup-node@v2
         with:
@@ -157,8 +159,6 @@ jobs:
         run: ${{ matrix.settings.setup }}
         if: ${{ matrix.settings.setup }}
         shell: bash
-      - name: Enter folder
-        run: cd crates/matrix-sdk-crypto-nodejs/
       - name: Install dependencies
         run: yarn install --ignore-scripts --frozen-lockfile --registry https://registry.npmjs.org --network-timeout 300000
       - name: Build
@@ -201,13 +201,13 @@ jobs:
             echo "~~~~ yarn --version ~~~~"
             yarn --version
           run: |
+            cd crates/matrix-sdk-crypto-nodejs/
             export PATH="/usr/local/cargo/bin:$PATH"
             pwd
             ls -lah
             whoami
             env
             freebsd-version
-            cd crates/matrix-sdk-crypto-nodejs/
             yarn install --ignore-scripts --frozen-lockfile --registry https://registry.npmjs.org --network-timeout 300000
             yarn build:release
             strip -x *.node
@@ -237,6 +237,8 @@ jobs:
     runs-on: ${{ matrix.settings.host }}
     steps:
       - uses: actions/checkout@v2
+      - name: Enter folder
+        run: cd crates/matrix-sdk-crypto-nodejs/
       - name: Setup node
         uses: actions/setup-node@v2
         with:
@@ -248,8 +250,6 @@ jobs:
         with:
           path: node_modules
           key: npm-cache-test-${{ matrix.settings.target }}-${{ matrix.node }}-${{ hashFiles('yarn.lock') }}
-      - name: Enter folder
-        run: cd crates/matrix-sdk-crypto-nodejs/
       - name: Install dependencies
         run: yarn install --ignore-scripts --frozen-lockfile --registry https://registry.npmjs.org --network-timeout 300000
       - name: Download artifacts
@@ -276,6 +276,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Enter folder
+        run: cd crates/matrix-sdk-crypto-nodejs/
       - name: Setup node
         uses: actions/setup-node@v2
         with:
@@ -287,8 +289,6 @@ jobs:
         with:
           path: node_modules
           key: npm-cache-test-linux-x64-gnu-${{ matrix.node }}-${{ hashFiles('yarn.lock') }}
-      - name: Enter folder
-        run: cd crates/matrix-sdk-crypto-nodejs/
       - name: Install dependencies
         run: yarn install --ignore-scripts --frozen-lockfile --registry https://registry.npmjs.org --network-timeout 300000
       - name: Download artifacts
@@ -315,6 +315,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Enter folder
+        run: cd crates/matrix-sdk-crypto-nodejs/
       - name: Setup node
         uses: actions/setup-node@v2
         with:
@@ -326,8 +328,6 @@ jobs:
         with:
           path: node_modules
           key: npm-cache-test-x86_64-unknown-linux-musl-${{ matrix.node }}-${{ hashFiles('yarn.lock') }}
-      - name: Enter folder
-        run: cd crates/matrix-sdk-crypto-nodejs/
       - name: Install dependencies
         run: yarn install --ignore-scripts --frozen-lockfile --registry https://registry.npmjs.org --network-timeout 300000
       - name: Download artifacts
@@ -355,6 +355,8 @@ jobs:
     steps:
       - run: docker run --rm --privileged multiarch/qemu-user-static:register --reset
       - uses: actions/checkout@v2
+      - name: Enter folder
+        run: cd crates/matrix-sdk-crypto-nodejs/
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
@@ -368,8 +370,6 @@ jobs:
         with:
           path: node_modules
           key: npm-cache-test-linux-aarch64-gnu-${{ matrix.node }}-${{ hashFiles('yarn.lock') }}
-      - name: Enter folder
-        run: cd crates/matrix-sdk-crypto-nodejs/
       - name: Install dependencies
         run: yarn install --ignore-scripts --ignore-platform --frozen-lockfile --registry https://registry.npmjs.org --network-timeout 300000
       - name: Setup and run tests
@@ -389,6 +389,8 @@ jobs:
     steps:
       - run: docker run --rm --privileged multiarch/qemu-user-static:register --reset
       - uses: actions/checkout@v2
+      - name: Enter folder
+        run: cd crates/matrix-sdk-crypto-nodejs/
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
@@ -402,8 +404,6 @@ jobs:
         with:
           path: node_modules
           key: npm-cache-test-linux-aarch64-musl-${{ matrix.node }}-${{ hashFiles('yarn.lock') }}
-      - name: Enter folder
-        run: cd crates/matrix-sdk-crypto-nodejs/
       - name: Install dependencies
         run: yarn install --ignore-scripts --ignore-platform --frozen-lockfile --registry https://registry.npmjs.org --network-timeout 300000
       - name: Setup and run tests
@@ -430,6 +430,8 @@ jobs:
     steps:
       - run: docker run --rm --privileged multiarch/qemu-user-static:register --reset
       - uses: actions/checkout@v2
+      - name: Enter folder
+        run: cd crates/matrix-sdk-crypto-nodejs/
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
@@ -443,8 +445,6 @@ jobs:
         with:
           path: node_modules
           key: npm-cache-test-linux-arm-gnueabihf-${{ matrix.node }}-${{ hashFiles('yarn.lock') }}
-      - name: Enter folder
-        run: cd crates/matrix-sdk-crypto-nodejs/
       - name: Install dependencies
         run: yarn install --ignore-scripts --ignore-platform --frozen-lockfile --registry https://registry.npmjs.org --network-timeout 300000
       - name: Setup and run tests
@@ -469,6 +469,8 @@ jobs:
       - test-linux-arm-gnueabihf-binding
     steps:
       - uses: actions/checkout@v2
+      - name: Enter folder
+        run: cd crates/matrix-sdk-crypto-nodejs/
       - name: Setup node
         uses: actions/setup-node@v2
         with:
@@ -482,8 +484,6 @@ jobs:
           key: npm-cache-ubuntu-latest-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             npm-cache-
-      - name: Enter folder
-        run: cd crates/matrix-sdk-crypto-nodejs/
       - name: Install dependencies
         run: yarn install --ignore-scripts --frozen-lockfile --registry https://registry.npmjs.org --network-timeout 300000
       - name: Download all artifacts
