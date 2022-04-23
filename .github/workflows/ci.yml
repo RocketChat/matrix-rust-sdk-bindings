@@ -43,7 +43,7 @@ jobs:
           cd crates/matrix-sdk-crypto-nodejs/
           ls -l
           yarn --ignore-scripts
-          yarn build:release
+          yarn build:darwin:64
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
@@ -74,7 +74,7 @@ jobs:
           cd crates/matrix-sdk-crypto-nodejs/
           ls -l
           yarn --ignore-scripts
-          yarn build:release --target=aarch64-apple-darwin
+          yarn build:darwin:aarch64
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
