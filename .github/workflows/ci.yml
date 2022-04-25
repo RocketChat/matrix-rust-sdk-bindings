@@ -44,10 +44,12 @@ jobs:
           ls -l
           yarn --ignore-scripts
           yarn build:darwin:x64
+          ls -l
+          ls -l lib
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: lib/index.darwin-x64.node
+          name: ./lib/index.darwin-x64.node
           if-no-files-found: error
   aarch64-apple-darwin:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
