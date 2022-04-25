@@ -89,7 +89,7 @@ jobs:
           cd crates/matrix-sdk-crypto-nodejs/
           docker build -f release/Dockerfile.linux -t builder .
           docker run --rm -v $(pwd):/build -w /build builder yarn --ignore-scripts 
-          docker run --rm -v $(pwd):/build -w /build builder yarn build:release
+          docker run --rm -v $(pwd):/build -w /build builder yarn build:linux
           ls -l
           ls -l lib
       - name: Upload artifact
@@ -155,6 +155,7 @@ jobs:
           mv artifacts/* crates/matrix-sdk-crypto-nodejs/lib/
           cd crates/matrix-sdk-crypto-nodejs/
           yarn install --ignore-scripts --frozen-lockfile --registry https://registry.npmjs.org --network-timeout 300000
+          yarn build:ts
       - name: Publish
         run: |
           if git log -1 --pretty=%B | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+$";
