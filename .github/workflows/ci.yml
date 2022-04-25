@@ -120,14 +120,13 @@ jobs:
           docker tag ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-alpine builder
 
           docker run --rm -v $(pwd):/build -w /build builder yarn --ignore-scripts 
-          docker run --rm -v $(pwd):/build -w /build builder yarn rust:targets && yarn build:linux:x64:musl
+          docker run --rm -v $(pwd):/build -w /build builder yarn build:linux:x64:musl
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: lib/index.linux-arm64.node
+          name: index.linux-x64-musl.node
+          path: crates/matrix-sdk-crypto-nodejs/lib/index.linux-x64-musl.node
           if-no-files-found: error
-
-         
 
   publish:
     name: Publish
@@ -155,6 +154,7 @@ jobs:
           cd crates/matrix-sdk-crypto-nodejs/
           yarn install --ignore-scripts --frozen-lockfile --registry https://registry.npmjs.org --network-timeout 300000
           yarn build:ts
+          ls -l lib
       - name: Publish
         run: |
           if git log -1 --pretty=%B | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+$";
