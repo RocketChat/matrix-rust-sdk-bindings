@@ -39,13 +39,9 @@ jobs:
           architecture: x64
       - name: Enter folder
         run: |
-          ls -l
           cd crates/matrix-sdk-crypto-nodejs/
-          ls -l
           yarn --ignore-scripts
           yarn build:darwin:x64
-          ls -l
-          ls -l lib
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
@@ -73,15 +69,14 @@ jobs:
           architecture: x64
       - name: Enter folder
         run: |
-          ls -l
           cd crates/matrix-sdk-crypto-nodejs/
-          ls -l
           yarn --ignore-scripts
           yarn build:darwin:aarch64
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: lib/index.darwin-arm64.node
+          name: index.darwin-arm64.node
+          path: crates/matrix-sdk-crypto-nodejs/lib/index.darwin-arm64.node
           if-no-files-found: error
 
   x86_64-unknown-linux-gnu:
@@ -91,16 +86,17 @@ jobs:
       - uses: actions/checkout@v2
       - name: Enter folder
         run: |
-          ls -l
           cd crates/matrix-sdk-crypto-nodejs/
-          ls -l
           docker build -f release/Dockerfile.linux -t builder .
           docker run --rm -v $(pwd):/build -w /build builder yarn --ignore-scripts 
           docker run --rm -v $(pwd):/build -w /build builder yarn build:linux
+          ls -l
+          ls -l lib
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: lib/index.linux-arm64.node
+          name: index.linux-.node
+          path: crates/matrix-sdk-crypto-nodejs/lib/index.linux-arm64.node
           if-no-files-found: error
 
   x86_64-unknown-linux-musl:
@@ -132,34 +128,27 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - x86_64-apple-darwin
+      - aarch64-apple-darwin
+      - x86_64-unknown-linux-gnu
     steps:
       - uses: actions/checkout@v2
-      - name: Enter folder
-        run: cd crates/matrix-sdk-crypto-nodejs/
       - name: Setup node
         uses: actions/setup-node@v2
         with:
           node-version: 16
           check-latest: true
           cache: yarn
-      - name: Cache NPM dependencies
-        uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: npm-cache-ubuntu-latest-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            npm-cache-
-      - name: Install dependencies
-        run: yarn install --ignore-scripts --frozen-lockfile --registry https://registry.npmjs.org --network-timeout 300000
       - name: Download all artifacts
         uses: actions/download-artifact@v2
         with:
           path: artifacts
-      - name: Move artifacts
-        run: yarn artifacts
-      - name: List packages
-        run: ls -R ./npm
-        shell: bash
+      - name: Enter folder
+        run: |
+          mkdir crates/matrix-sdk-crypto-nodejs/lib
+          ls -l artifacts
+          mv artifacts/* crates/matrix-sdk-crypto-nodejs/lib/
+          cd crates/matrix-sdk-crypto-nodejs/
+          yarn install --ignore-scripts --frozen-lockfile --registry https://registry.npmjs.org --network-timeout 300000
       - name: Publish
         run: |
           if git log -1 --pretty=%B | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+$";
