@@ -143,7 +143,9 @@ jobs:
           echo "Bringing in artifacts"
           mkdir crates/matrix-sdk-crypto-nodejs/lib
           ls -l artifacts
-          mv artifacts/* crates/matrix-sdk-crypto-nodejs/lib/
+          
+          # Upload puts them inside folders so yank just the files out and move into lib folder
+          find artifacts -type f -exec mv {} crates/matrix-sdk-crypto-nodejs/lib/ \;
           
           echo "Installing npm dependencies"
           cd crates/matrix-sdk-crypto-nodejs/
