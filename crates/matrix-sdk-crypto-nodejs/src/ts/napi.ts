@@ -17,10 +17,15 @@ const { join } = require('path');
 
 let mod;
 const independentBuildExists = existsSync(join(__dirname, 'index.node'));
-if (independentBuildExists) {
-    mod = require('./index.node');
-} else {
-    mod = require('./napi-module');
-}
 
+try {
+    if (independentBuildExists) {
+        mod = require('./index.node');
+    } else {
+        mod = require('./napi-module');
+    }
+} catch (e) {
+    console.log('IMPORTANT:  Failed to load the native module for matrix-sdk-crypto-nodejs.  Matrix functionality depending on this will not work');
+}
+    
 export default {...mod};
