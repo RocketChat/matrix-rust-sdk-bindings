@@ -13,8 +13,8 @@
 // limitations under the License.
 
 use matrix_sdk_crypto::{OutgoingRequest, OutgoingRequests::*, ToDeviceRequest};
-use napi::bindgen_prelude::ToNapiValue;
-use napi_derive::napi;
+use napi::bindgen_prelude::{FromNapiValue, ToNapiValue};
+use napi_derive::*;
 use ruma::{api::client::r0::keys::claim_keys::Request as KeysClaimRequest, events::EventContent, TransactionId};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Error};
