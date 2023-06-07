@@ -11,6 +11,7 @@
     "package.json",
     "README.md",
     "check-exists.js",
+    "prepare-output.js",
     "src",
     "lib",
     "!lib/index.node",
@@ -37,6 +38,7 @@
     "build:ts": "tsc",
     "build:test": "napi build",
     "prepublishOnly": "yarn build:ts",
+    "prepare": "node prepare-output.js",
     "postinstall": "node check-exists.js"
   },
   "dependencies": {
