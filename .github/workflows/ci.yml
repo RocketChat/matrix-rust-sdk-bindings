@@ -20,7 +20,7 @@ jobs:
     - name: Install rust
       uses: actions-rs/toolchain@v1
       with:
-        toolchain: nightly-2019-04-20
+        toolchain: stable
         components: rustfmt
         profile: minimal
         override: true
@@ -66,7 +66,7 @@ jobs:
     - name: Install rust
       uses: actions-rs/toolchain@v1
       with:
-        toolchain: nightly-2019-04-20
+        toolchain: stable
         components: clippy
         profile: minimal
         override: true
