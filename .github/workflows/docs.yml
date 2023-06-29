@@ -29,13 +29,13 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: stable
+          toolchain: nightly-2022-12-31
           override: true
 
       - name: Build docs
         uses: actions-rs/cargo@v1
         env:
-          RUSTDOCFLAGS: "--enable-index-page unstable-options"
+          RUSTDOCFLAGS: "--enable-index-page -Zunstable-options"
         with:
           command: doc
           args: --no-deps --workspace
