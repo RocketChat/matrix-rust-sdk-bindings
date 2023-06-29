@@ -11,7 +11,7 @@ env:
 jobs:
   style:
     name: Check style
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Checkout the repo
@@ -34,7 +34,7 @@ jobs:
   typos:
     name: Spell Check with Typos
     needs: [style]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Checkout Actions Repository
@@ -46,7 +46,7 @@ jobs:
   clippy:
     name: Run clippy
     needs: [style]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Checkout the repo
@@ -86,7 +86,7 @@ jobs:
   test:
     name: ${{ matrix.name }}
 
-    runs-on: ${{ matrix.os || 'ubuntu-latest' }}
+    runs-on: ${{ matrix.os || 'ubuntu-20.04' }}
     strategy:
       fail-fast: true
       matrix:
