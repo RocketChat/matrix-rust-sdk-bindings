@@ -41,6 +41,7 @@ jobs:
         run: |
           cd crates/matrix-sdk-crypto-nodejs/
           yarn --ignore-scripts
+          yarn prepare
           yarn build:darwin:x64
       - name: Upload artifact
         uses: actions/upload-artifact@v2
@@ -69,6 +70,7 @@ jobs:
         run: |
           cd crates/matrix-sdk-crypto-nodejs/
           yarn --ignore-scripts
+          yarn prepare
           yarn build:darwin:aarch64
       - name: Upload artifact
         uses: actions/upload-artifact@v2
@@ -86,7 +88,8 @@ jobs:
         run: |
           cd crates/matrix-sdk-crypto-nodejs/
           docker build -f release/Dockerfile.linux -t builder .
-          docker run --rm -v $(pwd):/build -w /build builder yarn --ignore-scripts 
+          docker run --rm -v $(pwd):/build -w /build builder yarn --ignore-scripts
+          docker run --rm -v $(pwd):/build -w /build builder yarn prepare
           docker run --rm -v $(pwd):/build -w /build builder yarn build:linux
       - name: Upload artifact
         uses: actions/upload-artifact@v2
@@ -116,7 +119,8 @@ jobs:
         run: |
           cd crates/matrix-sdk-crypto-nodejs/
           docker build -f release/Dockerfile.linux -t builder .
-          docker run --rm -v $(pwd):/build -w /build builder yarn --ignore-scripts 
+          docker run --rm -v $(pwd):/build -w /build builder yarn --ignore-scripts
+          docker run --rm -v $(pwd):/build -w /build builder yarn prepare
           docker run --rm -v $(pwd):/build -w /build -e RUSTFLAGS="-C target-feature=-crt-static" builder yarn build:linux:x64:musl
       - name: Upload artifact
         uses: actions/upload-artifact@v2
