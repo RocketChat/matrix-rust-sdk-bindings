@@ -107,7 +107,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: napi-module.js
-          path: crates/matrix-sdk-crypto-nodejs/lib/napi-module.js
+          path: crates/matrix-sdk-crypto-nodejs/lib/lib/napi-module.js
           if-no-files-found: error
 
   x86_64-unknown-linux-musl:
