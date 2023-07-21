@@ -11,7 +11,6 @@ RUN apt-get install -y g++-i686-linux-gnu
 RUN apt-get install -y gcc-multilib
 RUN apt-get install -y g++-multilib
 RUN apt-get install -y cmake
-RUN pip install cargo-zigbuild
 
 # This funky little hack allows compiling musl - thanks to: https://github.com/emk/rust-musl-builder/issues/53
 # RUN ln /usr/bin/gcc /usr/bin/musl-gcc
