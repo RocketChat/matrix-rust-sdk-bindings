@@ -42,7 +42,7 @@
     "postinstall": "node check-exists.js"
   },
   "dependencies": {
-    "@napi-rs/cli": "2.15.0",
+    "@napi-rs/cli": "2.16.2",
     "shelljs": "^0.8.4"
   },
   "devDependencies": {
