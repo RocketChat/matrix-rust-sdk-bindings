@@ -119,8 +119,6 @@ jobs:
         run: |
           cd crates/matrix-sdk-crypto-nodejs/
           docker build -f release/Dockerfile.linux -t builder .
-          docker run --rm -v $(pwd):/build -w /build pip3 install ziglang
-          docker run --rm -v $(pwd):/build -w /build rustup target add x86_64-unknown-linux-musl
           docker run --rm -v $(pwd):/build -w /build builder yarn --ignore-scripts
           docker run --rm -v $(pwd):/build -w /build builder yarn prepare
           docker run --rm -v $(pwd):/build -w /build -e RUSTFLAGS="-C target-feature=-crt-static" builder yarn build:linux:x64:musl
