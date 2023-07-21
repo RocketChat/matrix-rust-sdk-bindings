@@ -14,8 +14,8 @@ RUN apt-get install -y cmake
 RUN apt-get install -y python3-pip && pip3 install ziglang
 
 # # This funky little hack allows compiling musl - thanks to: https://github.com/emk/rust-musl-builder/issues/53
-# RUN ln /usr/bin/gcc /usr/bin/musl-gcc
-# RUN ln /usr/bin/g++ /usr/bin/musl-g++
+RUN ln /usr/bin/gcc /usr/bin/musl-gcc
+RUN ln /usr/bin/g++ /usr/bin/musl-g++
 
 # Install misc dependencies last to cache the expensive gcc layers
 RUN apt-get install -y curl
