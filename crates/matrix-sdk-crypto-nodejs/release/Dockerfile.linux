@@ -1,33 +1,4 @@
-FROM ubuntu:20.04
-
-ENV DEBIAN_FRONTEND=noninteractive
-
-# The install commands are broken out because apt gets confused about
-# how to install all the packages concurrently.
-RUN apt-get update
-RUN apt-get install -y build-essential
-RUN apt-get install -y gcc-i686-linux-gnu
-RUN apt-get install -y g++-i686-linux-gnu
-RUN apt-get install -y gcc-multilib
-RUN apt-get install -y g++-multilib
-RUN apt-get install -y cmake
-RUN apt-get install -y python3-pip && pip3 install ziglang
-
-# # This funky little hack allows compiling musl - thanks to: https://github.com/emk/rust-musl-builder/issues/53
-RUN ln /usr/bin/gcc /usr/bin/musl-gcc
-RUN ln /usr/bin/g++ /usr/bin/musl-g++
-
-# Install misc dependencies last to cache the expensive gcc layers
-RUN apt-get install -y curl
-
-# Headless install of NodeJS
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt-get install -y nodejs
-RUN npm install -g yarn@1
-
-# Headless install of Rust/Cargo
-RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain=nightly-2022-12-31
-ENV PATH="/root/.cargo/bin:${PATH}"
+FROM ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-debian-zig
 
 COPY ./package.json /src2/package.json
 WORKDIR /src2
