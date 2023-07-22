@@ -87,7 +87,7 @@ jobs:
       - name: Build
         run: |
           cd crates/matrix-sdk-crypto-nodejs/
-          docker build -f release/Dockerfile.linux -t builder .
+          docker build -f release/Dockerfile.linux.gnu -t builder .
           docker run --rm -v $(pwd):/build -w /build builder yarn --ignore-scripts
           docker run --rm -v $(pwd):/build -w /build builder yarn prepare
           docker run --rm -v $(pwd):/build -w /build builder yarn build:linux
@@ -118,7 +118,7 @@ jobs:
       - name: Build
         run: |
           cd crates/matrix-sdk-crypto-nodejs/
-          docker build -f release/Dockerfile.linux -t builder .
+          docker build -f release/Dockerfile.linux.musl -t builder .
           docker run --rm -v $(pwd):/build -w /build builder yarn --ignore-scripts
           docker run --rm -v $(pwd):/build -w /build builder yarn prepare
           docker run --rm -v $(pwd):/build -w /build -e RUSTFLAGS="-C target-feature=-crt-static" builder yarn build:linux:x64:musl
