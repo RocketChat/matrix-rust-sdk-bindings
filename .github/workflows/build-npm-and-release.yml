@@ -107,6 +107,37 @@ jobs:
           path: crates/matrix-sdk-crypto-nodejs/lib/napi-module.js
           if-no-files-found: error
 
+  aarch64-unknown-linux-gnu:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          override: true
+          toolchain: stable
+          target: aarch64-unknown-linux-gnu
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Build
+        run: |
+          cd crates/matrix-sdk-crypto-nodejs/
+          yarn --ignore-scripts
+          yarn build:linux:aarch64
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: index.linux-arm64-gnu.node
+          path: crates/matrix-sdk-crypto-nodejs/lib/index.darwin-arm64.node
+          if-no-files-found: error
+
+
   x86_64-unknown-linux-musl:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     runs-on: ubuntu-latest
@@ -133,6 +164,7 @@ jobs:
       - aarch64-apple-darwin
       - x86_64-unknown-linux-gnu
       - x86_64-unknown-linux-musl
+      - aarch64-unknown-linux-gnu
     steps:
       - uses: actions/checkout@v2
       - name: Setup node
