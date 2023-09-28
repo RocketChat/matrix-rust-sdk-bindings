@@ -126,7 +126,7 @@ jobs:
 
       - name: Build
         run: |
-          DEBIAN_FRONTEND=noninteractive sudo -E apt-get -y --allow-downgrades --allow-remove-essential --allow-change-held-packages -o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-confdef' binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+          DEBIAN_FRONTEND=noninteractive sudo -E apt-get -y --allow-downgrades --allow-remove-essential --allow-change-held-packages -o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-confdef' install binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
           cd crates/matrix-sdk-crypto-nodejs/
           yarn --ignore-scripts
           yarn build:linux:aarch64
@@ -147,9 +147,8 @@ jobs:
       - name: Build
         run: |
           cd crates/matrix-sdk-crypto-nodejs/
-          docker build -f release/Dockerfile.linux -t builder .
-          docker run --rm -v $(pwd):/build -w /build builder yarn --ignore-scripts 
-          docker run --rm -v $(pwd):/build -w /build -e RUSTFLAGS="-C target-feature=-crt-static" builder yarn build:linux:x64:musl
+          docker build -f release/Dockerfile.alpine -t builder .
+          docker run --rm -v $(pwd):/build -w /build builder sh -c 'yarn --ignore-scripts && yarn build:linux:x64:musl'
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
