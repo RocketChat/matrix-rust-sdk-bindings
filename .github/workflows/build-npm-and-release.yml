@@ -126,6 +126,7 @@ jobs:
 
       - name: Build
         run: |
+          DEBIAN_FRONTEND=noninteractive sudo -E apt-get -y --allow-downgrades --allow-remove-essential --allow-change-held-packages -o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-confdef' binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
           cd crates/matrix-sdk-crypto-nodejs/
           yarn --ignore-scripts
           yarn build:linux:aarch64
@@ -134,7 +135,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: index.linux-arm64-gnu.node
-          path: crates/matrix-sdk-crypto-nodejs/lib/index.darwin-arm64.node
+          path: crates/matrix-sdk-crypto-nodejs/lib/index.linux-arm64-gnu.node
           if-no-files-found: error
 
 
